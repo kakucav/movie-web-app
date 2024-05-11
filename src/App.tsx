@@ -1,6 +1,6 @@
 import Router from "./pages/Router";
 
-function App() {
+function App(): JSX.Element {
   return (
     <div>
       <Router />

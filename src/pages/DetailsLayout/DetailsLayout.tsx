@@ -1,4 +1,4 @@
-const DetailsLayout = () => {
+const DetailsLayout = (): JSX.Element => {
   return <div>DetailsLayout</div>;
 };
 

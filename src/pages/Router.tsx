@@ -10,7 +10,7 @@ import MovieDetails from "./DetailsLayout/MovieDetails/MovieDetails";
 import TVShowDetails from "./DetailsLayout/TVShowDetails/TVShowDetails";
 import NotFound from "./NotFound/NotFound";
 
-const Router = () => {
+const Router = (): JSX.Element => {
   const routeItems: IRouteItem[] = [
     { path: Pages.Dashboard, element: <Dashboard /> },
     {

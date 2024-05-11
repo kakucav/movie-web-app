@@ -1,4 +1,4 @@
-const MovieDetails = () => {
+const MovieDetails = (): JSX.Element => {
   return <div>MovieDetails</div>;
 };
 
