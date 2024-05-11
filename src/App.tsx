@@ -1,5 +1,11 @@
+import Router from "./pages/Router";
+
 function App() {
-  return <div>Movies App</div>;
+  return (
+    <div>
+      <Router />
+    </div>
+  );
 }
 
 export default App;
