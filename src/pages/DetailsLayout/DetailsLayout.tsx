@@ -1,9 +1,10 @@
+import DashboardLink from "components/DashboardLink/DashboardLink";
 import { Outlet } from "react-router-dom";
 
 const DetailsLayout = (): JSX.Element => {
   return (
     <div>
-      DetailsLayout
+      <DashboardLink text="Back" />
       <Outlet />
     </div>
   );
