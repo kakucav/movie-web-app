@@ -2,14 +2,14 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 
 interface useFetchDataParams<TData> {
-  fetchEndpoint: () => Promise<AxiosResponse<TData>>;
-  onError: () => void;
+  fetchEndpoint: (signal: AbortSignal) => Promise<AxiosResponse<TData>>;
+  errorMessage: string;
 }
 
 const useFetchData = <TData,>(
   params: useFetchDataParams<TData>
 ): { loading: boolean; data: TData | undefined } => {
-  const { fetchEndpoint, onError } = params;
+  const { fetchEndpoint } = params;
 
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<TData | undefined>(undefined);
@@ -19,7 +19,7 @@ const useFetchData = <TData,>(
 
     setLoading(true);
 
-    fetchEndpoint()
+    fetchEndpoint(controller.signal)
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -27,12 +27,12 @@ const useFetchData = <TData,>(
       .catch((error) => {
         if (axios.isCancel(error)) return;
 
-        onError();
+        // onError();
         setLoading(false);
       });
 
     return (): void => controller.abort();
-  }, [fetchEndpoint, onError]);
+  }, [fetchEndpoint]);
 
   return { loading, data };
 };
