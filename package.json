@@ -10,6 +10,10 @@
     "@types/node": "^16.18.97",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.6.8",
+    "humps": "^2.0.1",
+    "lodash.debounce": "^4.0.8",
+    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
@@ -39,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/humps": "^2.0.6",
+    "@types/lodash.debounce": "^4.0.9",
+    "sass": "^1.77.1"
   }
 }
