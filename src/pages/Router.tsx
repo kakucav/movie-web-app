@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Pages } from "../enums/Pages";
-import { IRouteItem } from "../interfaces/Routing";
+
+import { Pages } from "enums/Pages";
+
+import { IRouteItem } from "interfaces/Routing";
+
 import Dashboard from "./Dashboard/Dashboard";
 import DetailsLayout from "./DetailsLayout/DetailsLayout";
 import MovieDetails from "./DetailsLayout/MovieDetails/MovieDetails";
