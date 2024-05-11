@@ -1,0 +1,46 @@
+@import "styles/colors.scss";
+
+.debpouned_input_field_wrapper {
+  position: relative;
+
+  .input {
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    padding: 7px 35px;
+    font-size: 14px;
+    border-radius: 16px;
+    border: 2px solid $white;
+    transition: border-color 150ms ease-in-out;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 4px 8px 0 rgba($black, 0.2), 0 6px 20px 0 rgba($black, 0.19);
+
+      &:focus {
+        border: 2px solid $planetarium;
+      }
+    }
+  }
+
+  .search_icon {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    height: 22px;
+    transform: translateY(-50%);
+  }
+
+  .btn_reset {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    padding: 0;
+    height: 17px;
+    width: 17px;
+    transform: translateY(-50%);
+  }
+}

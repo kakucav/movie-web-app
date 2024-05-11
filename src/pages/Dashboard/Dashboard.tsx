@@ -5,12 +5,13 @@ import { ITabsToggleItem } from "interfaces/Tab";
 import TabsToggle from "components/TabsToggle/TabsToggle";
 import MoviesTab from "components/MoviesTab/MoviesTab";
 import TVShowsTab from "components/TVShowsTab/TVShowsTab";
+import DebouncedInputField from "components/DebouncedInputField/DebouncedInputField";
 
 import styles from "./Dashboard.module.scss";
 
 const Dashboard = (): JSX.Element => {
   const { filters, handleFiltersChange } = useAppContext();
-  const { showMovies } = filters;
+  const { showMovies, q } = filters;
 
   const tabsToggleItems: ITabsToggleItem[] = [
     {
@@ -28,6 +29,12 @@ const Dashboard = (): JSX.Element => {
   return (
     <div className={styles.dashboard_wrapper}>
       <TabsToggle items={tabsToggleItems} />
+
+      <DebouncedInputField
+        placeholder={`Search ${showMovies ? "Movies" : "TV Shows"} by title`}
+        value={q}
+        onChange={(value): void => handleFiltersChange({ q: value })}
+      />
 
       {showMovies ? <MoviesTab /> : <TVShowsTab />}
     </div>
