@@ -1,5 +1,12 @@
+import { Outlet } from "react-router-dom";
+
 const DetailsLayout = (): JSX.Element => {
-  return <div>DetailsLayout</div>;
+  return (
+    <div>
+      DetailsLayout
+      <Outlet />
+    </div>
+  );
 };
 
 export default DetailsLayout;
