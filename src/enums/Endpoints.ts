@@ -3,4 +3,6 @@ export enum Endpoints {
   TopRatedTVShows = "/tv/top_rated",
   MovieDetails = "/movie/:id",
   TVShowDetails = "/tv/:id",
+  SearchMovies = "/search/movie",
+  SearchTVShows = "/search/tv",
 }

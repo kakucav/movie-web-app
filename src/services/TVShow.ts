@@ -17,6 +17,13 @@ export default class TVShowService {
     });
   };
 
+  static getByName = (
+    params: { query: string },
+    signal: AbortSignal
+  ): Promise<AxiosResponse<ITopRatedResponse<ITVShow>>> => {
+    return axios.get(Endpoints.SearchTVShows, { params, signal });
+  };
+
   static getDetails = (
     id: ITVShow["id"],
     signal: AbortSignal

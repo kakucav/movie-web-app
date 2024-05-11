@@ -17,6 +17,13 @@ export default class MovieService {
     });
   };
 
+  static getByName = (
+    params: { query: string },
+    signal: AbortSignal
+  ): Promise<AxiosResponse<ITopRatedResponse<IMovie>>> => {
+    return axios.get(Endpoints.SearchMovies, { params, signal });
+  };
+
   static getDetails = (
     id: IMovie["id"],
     signal: AbortSignal
