@@ -6,6 +6,7 @@ import { IBaseMedia } from "interfaces/Media";
 import defaultImage from "assets/default_image.png";
 
 import styles from "./MediaCard.module.scss";
+import { generateTMDBImageSrc } from "helpers/ImageHelper";
 
 interface MediaCardProps<T extends IBaseMedia> {
   data: T;
@@ -17,7 +18,7 @@ const MediaCard = <T extends IBaseMedia>(
   props: MediaCardProps<T>
 ): JSX.Element => {
   const { data, getTitle, getTo } = props;
-  const { backdropPath } = data;
+  const { backdropPath, voteAverage } = data;
 
   // show default image while cover isn't loaded completely
   const [coverLoaded, setCoverLoaded] = useState<boolean>(false);
@@ -27,15 +28,23 @@ const MediaCard = <T extends IBaseMedia>(
       <div className={styles.image_wrapper}>
         <img className={styles.default_img} src={defaultImage} alt="default" />
 
-        <img
-          onLoad={(): void => setCoverLoaded(true)}
-          className={`${styles.cover_img} ${coverLoaded ? styles.loaded : ""}`}
-          src={`https://image.tmdb.org/t/p/w780/${backdropPath}`}
-          alt="poster"
-        />
+        {backdropPath && (
+          <img
+            onLoad={(): void => setCoverLoaded(true)}
+            className={`${styles.cover_img} ${
+              coverLoaded ? styles.loaded : ""
+            }`}
+            src={generateTMDBImageSrc(backdropPath, "w780")}
+            alt="poster"
+          />
+        )}
       </div>
 
-      <p>{getTitle(data)}</p>
+      <p className={styles.title}>{getTitle(data)}</p>
+
+      <span className={styles.rating}>
+        {voteAverage ? `Rating: ${voteAverage.toFixed(2)}` : "No rating"}
+      </span>
     </Link>
   );
 };

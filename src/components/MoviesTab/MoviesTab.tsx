@@ -1,4 +1,7 @@
+import { useCallback } from "react";
 import { generatePath } from "react-router-dom";
+
+import { useAppContext } from "context/app-context";
 
 import MovieService from "services/Movie";
 
@@ -11,12 +14,29 @@ import { Pages } from "enums/Pages";
 import MediaCard from "components/MediaCard/MediaCard";
 import MediaCardsContainer from "components/MediaCardsContainer/MediaCardsContainer";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import NoResults from "components/NoResults/NoResults";
 
 const MoviesTab = (): JSX.Element => {
+  const { filters } = useAppContext();
+  const { q } = filters;
+
+  const showTopRatedResults = !q || q.length < 3;
+
+  const fetchEndpoint = useCallback(
+    (signal: AbortSignal) => {
+      return showTopRatedResults
+        ? MovieService.getTopRated(signal)
+        : MovieService.getByName({ query: q }, signal);
+    },
+    [q, showTopRatedResults]
+  );
+
   const { data, loading } = useFetchData({
-    fetchEndpoint: MovieService.getTopRated,
+    fetchEndpoint,
     errorMessage: "Something went wrong while fetching Top Rated Movies.",
   });
+
+  const noResults = !loading && !data?.results.length;
 
   return (
     <>
@@ -36,6 +56,8 @@ const MoviesTab = (): JSX.Element => {
           ))}
         </MediaCardsContainer>
       )}
+
+      {noResults && <NoResults />}
     </>
   );
 };

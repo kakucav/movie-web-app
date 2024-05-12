@@ -1,4 +1,7 @@
+import { useCallback } from "react";
 import { generatePath } from "react-router-dom";
+
+import { useAppContext } from "context/app-context";
 
 import TVShowService from "services/TVShow";
 
@@ -11,12 +14,29 @@ import { ITVShow } from "interfaces/TVShow";
 import MediaCard from "components/MediaCard/MediaCard";
 import MediaCardsContainer from "components/MediaCardsContainer/MediaCardsContainer";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import NoResults from "components/NoResults/NoResults";
 
 const TVShowsTab = (): JSX.Element => {
+  const { filters } = useAppContext();
+  const { q } = filters;
+
+  const showTopRatedResults = !q || q.length < 3;
+
+  const fetchEndpoint = useCallback(
+    (signal: AbortSignal) => {
+      return showTopRatedResults
+        ? TVShowService.getTopRated(signal)
+        : TVShowService.getByName({ query: q }, signal);
+    },
+    [q, showTopRatedResults]
+  );
+
   const { data, loading } = useFetchData({
-    fetchEndpoint: TVShowService.getTopRated,
+    fetchEndpoint,
     errorMessage: "Something went wrong while fetching Top Rated TV Shows.",
   });
+
+  const noResults = !loading && !data?.results.length;
 
   return (
     <>
@@ -28,7 +48,7 @@ const TVShowsTab = (): JSX.Element => {
             <MediaCard<ITVShow>
               key={data.id}
               data={data}
-              getTitle={({ originalName }): string => originalName}
+              getTitle={({ name }): string => name}
               getTo={({ id }): string =>
                 generatePath(Pages.TVShowDetails, { id: id.toString() })
               }
@@ -36,6 +56,8 @@ const TVShowsTab = (): JSX.Element => {
           ))}
         </MediaCardsContainer>
       )}
+
+      {noResults && <NoResults />}
     </>
   );
 };

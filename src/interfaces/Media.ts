@@ -1,10 +1,9 @@
 export interface IBaseMedia {
-  backdropPath: string;
+  backdropPath: string | null;
   id: number;
   overview: string;
-  posterPath: string;
-  voteAverage: number;
-  voteCount: number;
+  voteAverage?: number;
+  voteCount?: number;
 }
 
 interface IGenre {
