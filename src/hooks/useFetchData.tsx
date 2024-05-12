@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useSnackbar } from "notistack";
 
+/*
+  wrap fetchEndpoint with useCallback in parent component
+  or it will be recreated on each render
+  and useEffect will go in infinite loop
+*/
 interface useFetchDataParams<TData> {
   fetchEndpoint: (signal: AbortSignal) => Promise<AxiosResponse<TData>>;
   errorMessage: string;

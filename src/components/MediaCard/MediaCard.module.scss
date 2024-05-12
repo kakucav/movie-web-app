@@ -6,6 +6,8 @@
   text-decoration: none;
 
   .image_wrapper {
+    box-sizing: border-box;
+    height: 300px;
     position: relative;
     border-radius: 12px 12px 0 0;
     border: 4px solid $white;
@@ -14,7 +16,7 @@
 
     .default_img {
       width: 100%;
-      max-height: 300px;
+      height: 100%;
       object-fit: cover;
     }
 
@@ -44,17 +46,30 @@
     font-size: 16px;
   }
 
-  .rating {
+  .rating,
+  .video {
     position: absolute;
     top: 10px;
-    left: 10px;
     border-radius: 9px;
     background-color: $black;
-    padding: 6px 10px;
-    color: $white;
     z-index: 2;
-    transform: translateX(calc(-100% - 10px));
     transition: transform 200ms ease-in-out;
+
+    &.rating {
+      left: 10px;
+      padding: 6px 10px;
+      color: $white;
+      transform: translateX(calc(-100% - 10px));
+    }
+
+    &.video {
+      right: 10px;
+      padding: 10px;
+      width: 25px;
+      height: 25px;
+      color: $white;
+      transform: translateX(calc(100% + 10px));
+    }
   }
 
   &:hover {
@@ -70,7 +85,8 @@
       background-color: $planetarium;
     }
 
-    .rating {
+    .rating,
+    .video {
       transform: translateX(0);
     }
   }

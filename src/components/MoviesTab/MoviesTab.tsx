@@ -40,6 +40,8 @@ const MoviesTab = (): JSX.Element => {
 
   return (
     <>
+      {data?.results.some((x) => x.video) ? "ima" : "nema"}
+
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -52,6 +54,7 @@ const MoviesTab = (): JSX.Element => {
               getTo={({ id }): string =>
                 generatePath(Pages.MovieDetails, { id: id.toString() })
               }
+              hasVideo={({ video }): boolean => video}
             />
           ))}
         </MediaCardsContainer>
