@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { useSnackbar } from "notistack";
 
 interface useFetchDataParams<TData> {
   fetchEndpoint: (signal: AbortSignal) => Promise<AxiosResponse<TData>>;
@@ -9,7 +10,9 @@ interface useFetchDataParams<TData> {
 const useFetchData = <TData,>(
   params: useFetchDataParams<TData>
 ): { loading: boolean; data: TData | undefined } => {
-  const { fetchEndpoint } = params;
+  const { fetchEndpoint, errorMessage } = params;
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<TData | undefined>(undefined);
@@ -27,12 +30,12 @@ const useFetchData = <TData,>(
       .catch((error) => {
         if (axios.isCancel(error)) return;
 
-        // onError();
+        enqueueSnackbar({ variant: "error", message: errorMessage });
         setLoading(false);
       });
 
     return (): void => controller.abort();
-  }, [fetchEndpoint]);
+  }, [fetchEndpoint, errorMessage, enqueueSnackbar]);
 
   return { loading, data };
 };

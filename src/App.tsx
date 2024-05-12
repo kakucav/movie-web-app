@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SnackbarProvider } from "notistack";
 
 import { AppContext } from "context/app-context";
 
@@ -19,11 +20,13 @@ function App(): JSX.Element {
   };
 
   return (
-    <AppContext.Provider value={{ filters, handleFiltersChange }}>
-      <div className={styles.app_container}>
-        <Router />
-      </div>
-    </AppContext.Provider>
+    <SnackbarProvider>
+      <AppContext.Provider value={{ filters, handleFiltersChange }}>
+        <div className={styles.app_container}>
+          <Router />
+        </div>
+      </AppContext.Provider>
+    </SnackbarProvider>
   );
 }
 
